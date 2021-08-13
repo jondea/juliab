@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ -e juliab.so ]
+then
+    julia --sysimage juliab.so "$@"
+else
+    julia create_juliab_so.jl
+fi
