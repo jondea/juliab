@@ -5,9 +5,10 @@ println("No juliab.so found, follow instructions to create")
 
 categories_to_packages = Dict(
     "Plotting" => ["Plots"],
-    "DataScience" => ["CSV", "DataFrames"]
+    "DataScience" => ["CSV", "DataFrames"],
+    "Utils" => ["Revise", "OhMyREPL"],
 )
-all_packages = ["Plots", "CSV", "DataFrames"]
+all_packages = unique(mapreduce(last, vcat, categories_to_packages))
 
 # Show menu with the categories
 all_category_names = collect(keys(categories_to_packages))
@@ -16,11 +17,7 @@ chosen_category_indices = request("Select the categories you care about:", categ
 chosen_category_names = all_category_names[collect(chosen_category_indices)]
 
 # Collect all the packages from selected categories
-chosen_category_packages = String[]
-for category in chosen_category_names
-    append!(chosen_category_packages, categories_to_packages[category])
-end
-unique!(chosen_category_packages)
+chosen_category_packages = unique(mapreduce(c->categories_to_packages[c], vcat, chosen_category_names))
 
 # Preselect packages from the categories
 category_menu = MultiSelectMenu(all_packages)
@@ -38,6 +35,7 @@ package_precompile_execution_files=["package_precompile_execution_files/$(p).jl"
 category_precompile_execution_files=["category_precompile_execution_files/$(p).jl" for p in chosen_category_names]
 
 precompile_execution_files = vcat(package_precompile_execution_files, category_precompile_execution_files)
+filter!(isfile, precompile_execution_files)
 
 if isempty(chosen_package_names)
     error("No packages specified, no point building .so file. Just use julia instead")
