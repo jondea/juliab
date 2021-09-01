@@ -44,6 +44,7 @@ end
 import Pkg
 println("Adding packages: ", join(chosen_package_names, ", "))
 Pkg.add(chosen_package_names)
+Pkg.update()
 
 Pkg.add("PackageCompiler")
 using PackageCompiler
