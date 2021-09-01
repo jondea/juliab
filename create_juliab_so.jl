@@ -5,7 +5,7 @@ println("No juliab.so found, follow instructions to create")
 
 categories_to_packages = Dict(
     "Plotting" => ["Plots"],
-    "DataScience" => ["CSV", "DataFrames"],
+    "Data" => ["CSV", "DataFrames", "DataFramesMeta","PrettyTables"],
     "Utils" => ["Revise", "OhMyREPL"],
 )
 all_packages = unique(mapreduce(last, vcat, categories_to_packages))
