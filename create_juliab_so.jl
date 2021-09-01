@@ -36,10 +36,13 @@ chosen_package_indices = request("For finer grain control, select individual pac
 chosen_package_names = all_packages[collect(chosen_package_indices)]
 
 package_precompile_execution_files=["package_precompile_execution_files/$(p).jl" for p in chosen_package_names]
+package_precompile_statements_files=["package_precompile_statements_files/$(p).jl" for p in chosen_package_names]
 category_precompile_execution_files=["category_precompile_execution_files/$(p).jl" for p in chosen_category_names]
 
 precompile_execution_files = vcat(package_precompile_execution_files, category_precompile_execution_files)
 filter!(isfile, precompile_execution_files)
+
+filter!(isfile, package_precompile_statements_files)
 
 if isempty(chosen_package_names)
     error("No packages specified, no point building .so file. Just use julia instead")
@@ -54,4 +57,6 @@ Pkg.add("PackageCompiler")
 using PackageCompiler
 println("Compiling")
 chosen_packages = Symbol.(chosen_package_names)
-create_sysimage(chosen_packages, sysimage_path="juliab.so", precompile_execution_file=precompile_execution_files)
+create_sysimage(chosen_packages, sysimage_path="juliab.so",
+    precompile_statements_file=package_precompile_statements_files,
+    precompile_execution_file=precompile_execution_files)
