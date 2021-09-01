@@ -7,6 +7,10 @@ categories_to_packages = Dict(
     "Plotting" => ["Plots"],
     "Data" => ["CSV", "DataFrames", "DataFramesMeta","PrettyTables"],
     "Utils" => ["Revise", "OhMyREPL"],
+    "StatsKit" => ["StatsKit"],
+    "Arrays" => ["OffsetArrays", "StaticArrays"],
+    "Maths" => ["Tau", "LinearAlgebra"],
+    "Pluto" => ["Pluto"],
 )
 all_packages = unique(mapreduce(last, vcat, categories_to_packages))
 
