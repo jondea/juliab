@@ -20,7 +20,7 @@ chosen_category_names = all_category_names[collect(chosen_category_indices)]
 chosen_category_packages = unique(mapreduce(c->categories_to_packages[c], vcat, chosen_category_names))
 
 # Preselect packages from the categories
-category_menu = MultiSelectMenu(all_packages)
+category_menu = MultiSelectMenu(all_packages; pagesize=30)
 for (i, package) in enumerate(category_menu.options)
     if package in chosen_category_packages
         push!(category_menu.selected, i)
