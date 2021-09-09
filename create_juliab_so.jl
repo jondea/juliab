@@ -57,6 +57,6 @@ Pkg.add("PackageCompiler")
 using PackageCompiler
 println("Compiling")
 chosen_packages = Symbol.(chosen_package_names)
-create_sysimage(chosen_packages, sysimage_path="juliab.so",
+create_sysimage(chosen_packages, sysimage_path=joinpath(@__DIR__(), "juliab.so"),
     precompile_statements_file=package_precompile_statements_files,
     precompile_execution_file=precompile_execution_files)

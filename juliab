@@ -1,7 +1,8 @@
-#!/bin/sh
-if [ -e juliab.so ]
+#!/bin/bash
+script_dir=$(dirname "$BASH_SOURCE")
+if [ -e "$script_dir/juliab.so" ]
 then
-    julia --sysimage juliab.so "$@"
+    julia --sysimage "$script_dir/juliab.so" "$@"
 else
-    julia create_juliab_so.jl
+    julia "$script_dir/create_juliab_so.jl"
 fi
